@@ -18,24 +18,30 @@ const cartItem = computed(() => cartStore.getItemByName(props.product.name));
     }
   })
 
-// const imageUrl = computed(() => {
-//   return `${import.meta.env.BASE_URL}images/${props.product.image.desktop}.svg`;
-// });
+const imageUrl = computed(() => {
+  const width = window.innerWidth
+  let selectedImage = props.product.image.mobile
+
+  if (width >= 1024) {
+    selectedImage = props.product.image.desktop
+  } else if (width >= 768) {
+    selectedImage = props.product.image.tablet
+  }
+
+  return `${import.meta.env.BASE_URL}${selectedImage}`
+})
 </script>
 
 <template>
   <div>
     <div class="relative mb-8 inline-block">
-      <picture>
-        <source :srcset="imagePath(product.image.desktop)" media="(min-width: 1024px)"/>
-        <source :srcset="imagePath(product.image.tablet)" media="(min-width: 768px)"/>
-        <img
-            :src="imagePath(product.image.mobile)"
-            :alt="product.name"
-            class="w-full h-auto object-cover rounded-xl"
-            :class="{'border-2 border-red': cartItem?.quantity }"
-        />
-      </picture>
+      <img
+          :src="imageUrl"
+          :alt="product.name"
+          class="w-full h-auto object-cover rounded-xl"
+          :class="{ 'border-2 border-red': cartItem?.quantity }"
+      />
+
       <AddToCartButton
           :quantity="cartItem?.quantity || 0"
           @add="cartStore.addToCart(product)"

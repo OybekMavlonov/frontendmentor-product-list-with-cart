@@ -9,12 +9,16 @@ const emit = defineEmits<{
 }>();
 
 const totalItemPrice = computed(() => props.item.quantity * props.item.product.price)
+
+const imageUrl = computed(() => {
+  return `${import.meta.env.BASE_URL}${props.item.product.image.thumbnail}`;
+});
 </script>
 
 <template>
   <div class="flex items-center justify-between border-b border-b-rose-400 mb-4">
     <div class="flex items-center gap-x-2 mb-6">
-      <img :src="item.product.image.thumbnail" alt="thumbnail" class="rounded-xl size-14">
+      <img :src="imageUrl" alt="thumbnail" class="rounded-xl size-14">
       <div>
         <h3 class="text-rose-900 font-semibold">{{ item.product.name }}</h3>
         <div class="flex pt-2 gap-x-4">
