@@ -9,15 +9,6 @@ const cartStore = useCartStore()
 
 const cartItem = computed(() => cartStore.getItemByName(props.product.name));
 
-  const imagePath = computed(() => {
-    return function (arg:string): string {
-      const imageUrl = new URL(arg, import.meta.url)
-          .href
-
-      return imageUrl
-    }
-  })
-
 const imageUrl = computed(() => {
   const width = window.innerWidth
   let selectedImage = props.product.image.mobile
