@@ -3,5 +3,5 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/frontendmentor/product-list-with-cart/'
+  base: '/frontendmentor/product-list-with-cart/  '
 })

@@ -8,17 +8,29 @@ const props = defineProps(["product"])
 const cartStore = useCartStore()
 
 const cartItem = computed(() => cartStore.getItemByName(props.product.name));
+
+  const imagePath = computed(() => {
+    return function (arg:string): string {
+      const imageUrl = new URL(arg, import.meta.url)
+          .href
+
+      return imageUrl
+    }
+  })
+
+// const imageUrl = computed(() => {
+//   return `${import.meta.env.BASE_URL}images/${props.product.image.desktop}.svg`;
+// });
 </script>
 
 <template>
   <div>
     <div class="relative mb-8 inline-block">
       <picture>
-        <source :srcset="product.image.desktop" media="(min-width: 1024px)"/>
-        <source :srcset="product.image.tablet" media="(min-width: 768px)"/>
-<!--        <source :srcset="product.image.mobile" media="(min-width: 380px)"/>-->
+        <source :srcset="imagePath(product.image.desktop)" media="(min-width: 1024px)"/>
+        <source :srcset="imagePath(product.image.tablet)" media="(min-width: 768px)"/>
         <img
-            :src="product.image.mobile"
+            :src="imagePath(product.image.mobile)"
             :alt="product.name"
             class="w-full h-auto object-cover rounded-xl"
             :class="{'border-2 border-red': cartItem?.quantity }"
